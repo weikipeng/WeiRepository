@@ -1,0 +1,70 @@
+//apply from: rootProject.getRootDir().getAbsolutePath() + "/utils.gradle"
+
+//家长帮版本名字
+ext.customVersionName = "5.4.3"
+//家长帮版本号码，必须为数字
+ext.customVersionCode = 48
+
+ext.apkName = "";
+
+//获取Git的版本号
+ext.getGitRevision = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+//获取Git的版本时间
+ext.getGitRevisionTime = { ->
+//    git show -s --format=%ci
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'show', '-s', '--format=%ci'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+ext.getGitUserEmail = {
+//    git config user.email
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'config', 'user.email'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+ext.getGitCommitInfo ={
+//    git log -1
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'log', '-1'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+//获取当前的分支名字 dev
+//git branch | grep -e "^*" | cut -d " " -f2
+ext.getGitCurrentBranch ={
+//    git log -1
+    def stdout = new ByteArrayOutputStream()
+    exec {
+//        commandLine 'git', 'branch', '|', 'grep', '-e', '"^*"', '|', 'cut', '-d', '" "', '-f2'
+//        commandLine 'git', 'branch', '|', 'grep', '-e', '\"\\^\\*\"'
+//        commandLine 'git', 'branch | grep \-e "^*"'
+//        commandLine 'git config user.email'
+
+        commandLine "/bin/sh", '-c',' git branch | grep -e "^*" | cut -d " " -f2'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+//task featuresWaiting(type: Exec) {
+//    commandLine "bash", "-c", "'${task.project.projectDir}/show.sh' | grep \-\-\- | grep #feature''
+//}

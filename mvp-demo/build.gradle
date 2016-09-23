@@ -1,15 +1,26 @@
 apply plugin: 'com.android.application'
 
+apply from: rootProject.getRootDir().getAbsolutePath() + "/version.gradle"
+
+//jzb_5.4.3_dev_0922_22_09.apk
+
+apkName = "JZB_" + customVersionName + '_' + getGitCurrentBranch()
+//apkName = "JZB_"+customVersionName + getGitUserEmail()
+
+println("apkName ===> " + apkName)
+
 android {
-    compileSdkVersion 24
+    compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.pengjunwei.android"
-        minSdkVersion 14
+        minSdkVersion rootProject.minSdkVersion
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        project.ext.set("archivesBaseName", "JZB_" + versionName +"_20160923");
     }
     buildTypes {
         release {
