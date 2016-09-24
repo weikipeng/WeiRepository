@@ -62,7 +62,8 @@ ext.getGitCurrentBranch = {
         commandLine "/bin/sh", '-c', ' git branch | grep -e "^*" | cut -d " " -f2'
         standardOutput = stdout
     }
-    return stdout.toString().trim()
+    ext.currentBranch = stdout.toString().trim();
+    return currentBranch
 }
 
 //获取最后提交的日期时间
@@ -89,12 +90,17 @@ ext.initApkName = {
             .append(getGitCurrentBranch())
             .append("_")
             .append(getGitCommitDate())
-            .append(".apk")
+//            .append(".apk")
 
 //    apkName = "JZB_" + customVersionName + '_' + getGitCurrentBranch()
 
     apkName = stringBuilder.toString()
     println("apkName ===> " + apkName)
+}
+
+//当前是否可以调试
+ext.isDebuggable = {
+    return "dev".equals(currentBranch)
 }
 
 //task testWei() {

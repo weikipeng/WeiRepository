@@ -1,0 +1,43 @@
+ext {
+
+    initReleaseUrl = {
+        ext.domainUrl = "http://mapi.xuedi.com/"
+        ext.URL_SENTRY = "http://9cfe099201194fcf813a9beda93e9c6c:60bfd146943c4704926eb08e93f6d023@sentry.jzb.com/6"
+
+        ext.BASE_REST_URL = "https://api.jzb.com"
+        ext.BASE_URL = "https://mp.jzb.com"
+        ext.BASE_URL_HTTP = "http://m.jzb.com"
+        ext.BASE_URL_PAY = "http://pay.jzb.com"
+        ext.BASE_URL_ACTIVITY_MANAGER = "http://mhd.jzb.com"
+
+        ext.BASE_REST_QA_URL = "http://wenda.jzb.com/"
+        ext.BASE_URL_AVATAR = "http://atths.jzb.com"
+
+        println("my main initReleaseUrl ===> " + domainUrl)
+    }
+
+    initDebugUrl = {
+        ext.domainUrl = "http://api-dev.xuedi.com/"
+        ext.URL_SENTRY = "http://aa93943c6e4d4196ab17e4dc4ba71064:f311fbb597ba437da8898562f89c24da@sentry.jzb.com/7"
+
+        ext.BASE_REST_URL = "http://api-dev.jzb.com"
+        ext.BASE_URL = "http://122.112.13.37:8181"
+        ext.BASE_URL_HTTP = "http://122.112.13.37:8181"
+        ext.BASE_URL_PAY = "http://pay-dev.jzb.com"
+        ext.BASE_URL_ACTIVITY_MANAGER = "http://122.112.13.29:81"
+
+        ext.BASE_REST_QA_URL = "http://app-dev.jzb.com"
+        ext.BASE_URL_AVATAR = "http://122.112.13.22:82"
+
+        println("my main initDebugUrl ===> " + domainUrl)
+    }
+
+    initUrl = {
+        println("now branch is " + currentBranch)
+        if ("dev".equals(currentBranch)) {
+            initDebugUrl()
+        }else{
+            initReleaseUrl()
+        }
+    }
+}

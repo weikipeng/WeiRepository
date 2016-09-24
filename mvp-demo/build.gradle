@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
 
 apply from: rootProject.getRootDir().getAbsolutePath() + "/version.gradle"
+apply from: rootProject.getRootDir().getAbsolutePath() + "/url.gradle"
 
 initApkName()
 println("my main apkName ===> " + apkName)
+
+initUrl()
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -12,23 +15,40 @@ android {
         applicationId "com.pengjunwei.android"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode customVersionCode
+        versionName customVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         project.ext.set("archivesBaseName", apkName);
+
+        //Git版本号
+        buildConfigField "String", "REVISION_GIT",                  "\"${getGitRevision()}\""
+        buildConfigField "String", "REVISION_DATE_GIT",             "\"${getGitRevisionTime()}\""
+        buildConfigField "String", "REVISION_BRANCH_GIT",             "\"${getGitCurrentBranch()}\""
+
+        buildConfigField 'String', 'GET_DOMAIN_URL',                "\"$project.domainUrl\""
+        buildConfigField 'String', 'BASE_REST_URL',                 "\"$project.BASE_REST_URL\""
+        buildConfigField 'String', 'BASE_URL',                      "\"$project.BASE_URL\""
+        buildConfigField 'String', 'BASE_URL_HTTP',                 "\"$project.BASE_URL_HTTP\""
+        buildConfigField 'String', 'BASE_URL_PAY',                  "\"$project.BASE_URL_PAY\""
+        buildConfigField 'String', 'BASE_URL_ACTIVITY_MANAGER',     "\"$project.BASE_URL_ACTIVITY_MANAGER\""
+        buildConfigField 'String', 'BASE_REST_QA_URL',              "\"$project.BASE_REST_QA_URL\""
+        buildConfigField 'String', 'BASE_URL_AVATAR',               "\"$project.BASE_URL_AVATAR\""
+        buildConfigField 'String', 'URL_SENTRY',                    "\"$project.URL_SENTRY\""
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable isDebuggable()
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(":mvp")
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':mvp')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -36,3 +56,4 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
 }
+
