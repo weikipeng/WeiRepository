@@ -1,12 +1,16 @@
 apply plugin: 'com.android.application'
 
+
 apply from: rootProject.getRootDir().getAbsolutePath() + "/version.gradle"
 apply from: rootProject.getRootDir().getAbsolutePath() + "/url.gradle"
+apply from: rootProject.getRootDir().getAbsolutePath() + "/flavor.gradle"
 
 initApkName()
 println("my main apkName ===> " + apkName)
 
 initUrl()
+
+initFlavor()
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -42,6 +46,18 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable isDebuggable()
+        }
+    }
+
+    productFlavors {
+//        customFlavors.each { CustomFlavor customFlavor ->
+//            "$customFlavor.flavorname" {
+//            }
+//        }
+
+        customFlavors.each {customFlavor ->
+            "$customFlavor" {
+            }
         }
     }
 }

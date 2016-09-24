@@ -1,0 +1,118 @@
+//public static class CustomFlavor {
+//    public String flavorname;
+//    public String basename;
+//    public String appid;
+//    public String bannerid;
+//    public String interstitialid;
+//    public String category;
+//}
+//
+//
+//
+//ArrayList<CustomFlavor> customFlavors = new ArrayList<CustomFlavor>();
+//
+//ext.customFlavors = this.customFlavors
+//
+//ext.initPublishFlavor = {
+//    CustomFlavor flavor;
+//
+//    for (i = 18; i < 96; i++) {
+//        flavor = new CustomFlavor();
+//        flavor.flavorname = "b" + i
+//        customFlavors.add(flavor);
+//    }
+//}
+//
+//ext.initNormalFlavor = {
+//    CustomFlavor flavor = new CustomFlavor();
+//    flavor.flavorname = "dev"
+//    customFlavors.add(flavor);
+//}
+//
+//ext.initFlavor = {
+//    println("now branch is " + currentBranch)
+//    //发布版本的情况打包
+//    if ("packPublish".equals(currentBranch)) {
+//        initPublishFlavor()
+//    } else {
+//        //平常调试情况打包
+//        initNormalFlavor()
+//    }
+//}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+
+ext.customFlavors = [];
+
+ext.customFlavors = this.customFlavors
+
+ext.initPublishFlavor = {
+    for (int i = 18; i < 96; i++) {
+        customFlavors.add("b0" + i);
+//        customFlavors << "b" + i
+    }
+}
+
+ext.initNormalFlavor = {
+    customFlavors << "dev"
+}
+
+ext.initFlavor = {
+    println("now branch is " + currentBranch)
+    //发布版本的情况打包
+    if ("packPublish".equals(currentBranch)) {
+        initPublishFlavor()
+    } else {
+        //平常调试情况打包
+//        initNormalFlavor()
+        initPublishFlavor()
+    }
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//
+////http://stackoverflow.com/questions/36291362/dynamically-generating-productflavors-and-sourcesets-using-a-list-of-names-with/36294908#36294908
+//class MyFlavor {
+//    public String flavorname;
+//    public String basename;
+//    public String appid;
+//    public String bannerid;
+//    public String interstitialid;
+//    public String category;
+//}
+//
+//def ArrayList<MyFlavor> myFlavors = new ArrayList<>();
+//
+//new File('app/flavors.csv').eachLine {
+//    String[] values = "$it".split(',');
+//    MyFlavor f = new MyFlavor();
+//    f.flavorname = values[0];
+//    f.basename = values[0].split('_')[0];
+//    f.appid = values[1];
+//    f.bannerid = values[2];
+//    f.interstitialid = values[3];
+//    if(values[0].contains('_')) f.category= "state"
+//    else f.category = "country";
+//    myFlavors.add(f);
+//}
+//
+//productFlavors {
+//    myFlavors.each { MyFlavor f ->
+//        "$f.flavorname" {
+//            applicationId = "$f.appid"
+//            buildConfigField 'String', 'BANNER_ID', "\"" + "$f.bannerid" + "\""
+//            buildConfigField 'String', 'INTERSTITIAL_ID', "\"" + "$f.interstitialid" + "\""
+//            buildConfigField 'String', 'CATEGORY', "\"" + "$f.category" + "\""
+//        }
+//    }
+//}
+//sourceSets {
+//    myFlavors.each { MyFlavor f ->
+//        "$f.flavorname" {
+//            assets.srcDirs = ['repo-assets/' + "$f.basename"]
+//            res.srcDirs = ['repo-mipmap/' + "$f.basename" , 'repo-strings/' + "$f.flavorname"]
+//        }
+//
+//    }
+//}
