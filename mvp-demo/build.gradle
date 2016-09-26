@@ -5,12 +5,31 @@ apply from: rootProject.getRootDir().getAbsolutePath() + "/version.gradle"
 apply from: rootProject.getRootDir().getAbsolutePath() + "/url.gradle"
 apply from: rootProject.getRootDir().getAbsolutePath() + "/flavor.gradle"
 
+buildscript {
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+    dependencies {
+        classpath 'com.jzb.gradle.plugin:auto-pack:1.0.0'
+    }
+}
+apply plugin: 'com.jzb.android.autopack'
+
+import com.jzb.gradle.autopack.GitTool
+import com.jzb.gradle.autopack.GitInfo
+
+
+
 initApkName()
 println("my main apkName ===> " + apkName)
 
 initUrl()
 
 initFlavor()
+
+
 
 android {
     compileSdkVersion rootProject.compileSdkVersion

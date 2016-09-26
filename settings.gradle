@@ -1,1 +1,1 @@
-include ':mvp-demo', ':mvp', ':support'
+include ':mvp-demo', ':mvp', ':support', ':auto-pack'

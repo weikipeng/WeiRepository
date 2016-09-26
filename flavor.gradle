@@ -65,8 +65,8 @@ ext.initFlavor = {
         initPublishFlavor()
     } else {
         //平常调试情况打包
-//        initNormalFlavor()
-        initPublishFlavor()
+        initNormalFlavor()
+//        initPublishFlavor()
     }
 }
 
